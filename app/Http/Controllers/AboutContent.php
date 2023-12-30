@@ -52,7 +52,29 @@ class AboutContent extends Controller
      */
     public function store(Request $request): Response
     {
-        $data = \App\Models\AboutContent::create($request->all());
-        return $this->addHeaders(response($data), $data->count());
+        $data = $request->toArray();
+        \App\Helpers::log($data);
+        $method = $data['method'];
+        unset($data['method']);
+        if ($method === 'edit') {
+            $record = \App\Models\AboutContent::find((int) $data['id']);
+        } else {
+            $record = new \App\Models\AboutContent();
+        }
+        $record->content = $data['content'];
+        $record->menu = $data['menu'];
+        $record->route = $data['route'];
+        $record->topBar = !!$data['topBar'];
+        $data['success'] = $record->save();
+
+        return $this->addHeaders(response($data), count($data));
+    }
+
+    public function remove(string $id): Response
+    {
+        \App\Helpers::log($id);
+        $record = \App\Models\AboutContent::find((int) $id);
+        $data = $record->delete();
+        return $this->addHeaders(response($data), 1);
     }
 }
