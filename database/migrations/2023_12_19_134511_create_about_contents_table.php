@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('content');
             $table->text('menu');
-            $table->text('rout');
+            $table->text('route');
             $table->boolean('topBar');
             $table->timestamps();
         });

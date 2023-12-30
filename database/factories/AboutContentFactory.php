@@ -28,7 +28,7 @@ class AboutContentFactory extends Factory
         $content .= '</div>';
 
         return [
-            'rout' => 'us',
+            'route' => 'us',
             'menu' => 'О нас',
             'topBar' => true,
             'content' => $content,
