@@ -72,9 +72,18 @@ class AboutContent extends Controller
 
     public function remove(string $id): Response
     {
-        \App\Helpers::log($id);
         $record = \App\Models\AboutContent::find((int) $id);
         $data = $record->delete();
         return $this->addHeaders(response($data), 1);
+    }
+
+    public function topBarLinks(): Response
+    {
+        $data = \App\Models\AboutContent::select(['menu', 'route'])->where('topBar', 1)->get();
+        foreach ($data as $link) {
+            $links['title'] = $link->menu;
+            $link['href'] = $link->route;
+        }
+        return $this->addHeaders(response($links), count($links));
     }
 }
