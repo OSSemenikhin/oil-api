@@ -12,13 +12,13 @@ class AboutContent extends Model
 
     public function scopeGetBySlug(Builder $query, string $slug): Builder
     {
-        return $query->where('route', $slug);
+        return $query->where('href', $slug);
     }
 
     public function scopeGetHeadList(Builder $query): Builder
     {
-        return $query->addSelect(['menu as title'])
-                 ->addSelect(['route as href'])
-                 ->where('topBar', 1);
+        return $query->select(['title', 'href'])
+                 ->where('topBar', 1)
+                 ->orderBy('order', 'ASC');
     }
 }

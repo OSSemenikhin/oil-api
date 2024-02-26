@@ -54,7 +54,7 @@ class AboutContent extends Controller
     public function store(Request $request): Response
     {
         $data = $request->toArray();
-        \App\Helpers::log($data);
+        // \App\Helpers::log($data);
         $method = $data['method'];
         unset($data['method']);
         if ($method === 'edit') {
@@ -63,8 +63,9 @@ class AboutContent extends Controller
             $record = new \App\Models\AboutContent();
         }
         $record->content = $data['content'];
-        $record->menu = $data['menu'];
-        $record->route = $data['route'];
+        $record->title = $data['title'];
+        $record->href = $data['href'];
+        $record->order = $data['order'];
         $record->topBar = !!$data['topBar'];
         $data['success'] = $record->save();
 

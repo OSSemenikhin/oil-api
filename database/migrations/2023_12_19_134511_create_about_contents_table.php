@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('about_contents', function (Blueprint $table) {
             $table->id();
             $table->text('content');
-            $table->text('menu');
-            $table->text('route');
+            $table->text('title');
+            $table->text('href');
             $table->boolean('topBar');
+            $table->integer('order')->default(1);
             $table->timestamps();
         });
     }
