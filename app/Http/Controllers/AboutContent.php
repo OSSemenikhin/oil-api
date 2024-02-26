@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -67,7 +68,7 @@ class AboutContent extends Controller
         $record->topBar = !!$data['topBar'];
         $data['success'] = $record->save();
 
-        return $this->addHeaders(response($data), count($data));
+        return $this->addHeaders(response($data), 1);
     }
 
     public function remove(string $id): Response
@@ -79,11 +80,7 @@ class AboutContent extends Controller
 
     public function topBarLinks(): Response
     {
-        $data = \App\Models\AboutContent::select(['menu', 'route'])->where('topBar', 1)->get();
-        foreach ($data as $link) {
-            $links['title'] = $link->menu;
-            $link['href'] = $link->route;
-        }
-        return $this->addHeaders(response($links), count($links));
+        $data = \App\Models\AboutContent::getHeadList()->get();
+        return $this->addHeaders(response($data), count($data));
     }
 }

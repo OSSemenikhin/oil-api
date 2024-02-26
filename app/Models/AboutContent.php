@@ -14,4 +14,11 @@ class AboutContent extends Model
     {
         return $query->where('route', $slug);
     }
+
+    public function scopeGetHeadList(Builder $query): Builder
+    {
+        return $query->addSelect(['menu as title'])
+                 ->addSelect(['route as href'])
+                 ->where('topBar', 1);
+    }
 }
